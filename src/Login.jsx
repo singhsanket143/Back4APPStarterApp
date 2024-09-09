@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-
+import Parse from 'parse';
 const Login = () => {
   const navigate = useNavigate();
 
@@ -13,6 +13,9 @@ const Login = () => {
   const handleLogin = async (values, { setSubmitting, setErrors }) => {
     try {
       // Todo: Add your login logic here
+      const user = await Parse.User.logIn(values.username, values.password);
+      localStorage.setItem('sessionToken', user.getSessionToken());
+      navigate('/home');
     } catch (e) {
       setErrors({ server: e.message });
     } finally {

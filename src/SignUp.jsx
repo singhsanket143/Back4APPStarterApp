@@ -1,4 +1,4 @@
-import Parse from 'parse/dist/parse.min.js';
+import Parse from 'parse';
 import { useNavigate } from 'react-router-dom';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
@@ -13,13 +13,14 @@ const Signup = () => {
   });
 
   const handleSignup = async (values, { setSubmitting, setErrors }) => {
-    const user = new Parse.User();
-    user.set("username", values.username);
-    user.set("password", values.password);
-    user.set("email", values.email);
-
+    // Todo: Implement user sign up
+    const user = await new Parse.User(); // Create a new instance of the user class
+    user.set('username', values.username); // Set the username
+    user.set('email', values.email); // Set the email
+    user.set('password', values.password); // Set the password
     try {
-      await user.signUp();
+
+      await user.signUp(); // Save the user to the server
       localStorage.setItem('sessionToken', user.getSessionToken());
       navigate('/home');
     } catch (e) {

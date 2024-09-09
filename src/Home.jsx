@@ -1,10 +1,13 @@
 import { useNavigate } from 'react-router-dom';
-
+import Parse from 'parse';
 const Home = () => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
     // Todo: Add your logout logic here
+    Parse.User.logOut();
+    localStorage.removeItem('sessionToken');
+    navigate('/login');
   };
 
   return (
